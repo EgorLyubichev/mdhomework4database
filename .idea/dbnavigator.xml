@@ -29,7 +29,16 @@
 --foreign key (userId) references Users (userId)
 --);
 
---drop table Accounts;]]></console>
+--drop table Accounts;
+
+--create table Transactions(
+--transactionId integer primary key autoincrement,
+--accountId integer(10),
+--amount decimal(15, 3),
+--foreign key (accountId) references Accounts (accountId)
+--);
+
+--drop table Transactions;]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
@@ -37,12 +46,12 @@
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
     <open-files>
-      <object connection-id="651f588b-2564-402d-a781-8fedb7d409db" object-ref="schemas/main/tables/Accounts" />
-      <object connection-id="651f588b-2564-402d-a781-8fedb7d409db" object-ref="schemas/main/tables/Users" />
+      <object connection-id="651f588b-2564-402d-a781-8fedb7d409db" object-ref="schemas/main/tables/Transactions" />
     </open-files>
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
     <filter-actions connection-id="651f588b-2564-402d-a781-8fedb7d409db" dataset="main.Accounts" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="651f588b-2564-402d-a781-8fedb7d409db" dataset="main.Transactions" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="651f588b-2564-402d-a781-8fedb7d409db" dataset="main.Users" active-filter-id="EMPTY_FILTER" />
   </component>
   <component name="DBNavigator.Project.ExecutionManager">

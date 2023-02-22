@@ -15,7 +15,12 @@ public enum SQLScript {
     ACCOUNT_REPOSITORY_READ_ALL("SELECT * FROM Accounts"),
     ACCOUNT_REPOSITORY_CREATE("INSERT INTO Accounts (userId, balance, currency) VALUES (?, ?, ?)"),
     ACCOUNT_REPOSITORY_UPDATE("UPDATE Accounts SET balance = ? WHERE accountId = ?"),
-    ACCOUNT_REPOSITORY_DELETE("DELETE FROM Accounts WHERE accountId = ?");
+    ACCOUNT_REPOSITORY_DELETE("DELETE FROM Accounts WHERE accountId = ?"),
+
+    TRANSACTION_REPOSITORY_READ("SELECT * FROM Transactions WHERE transactionId = "),
+    TRANSACTION_REPOSITORY_READ_BY_ACCOUNT_ID("SELECT * FROM Transactions WHERE accountId = "),
+    TRANSACTION_REPOSITORY_READ_ALL("SELECT * FROM Transactions"),
+    TRANSACTION_REPOSITORY_CREATE("INSERT INTO Transactions (accountId, amount) VALUES (?, ?)");
 
     private final String value;
 

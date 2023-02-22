@@ -13,8 +13,8 @@ import lombok.ToString;
 @Setter
 @ToString
 @Builder
-public class User {
-    private int id;
-    private String name;
-    private String address;
+public class Transaction {
+    private int transactionId;
+    private int accountId;
+    private double amount;
 }
