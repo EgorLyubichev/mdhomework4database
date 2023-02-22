@@ -1,4 +1,4 @@
-package by.lev.repository;
+package by.lev.repository.user_repository;
 
 import by.lev.connection_db.AppConnection;
 import by.lev.domain.User;
@@ -27,9 +27,8 @@ public class UserRepository implements UserRepositoryInterface {
     public void create(User user) throws SQLException {
         connection = new AppConnection().getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(USER_REPOSITORY_CREATE.getValue());
-        preparedStatement.setInt(1, user.getId());
-        preparedStatement.setString(2, user.getName());
-        preparedStatement.setString(3, user.getAddress());
+        preparedStatement.setString(1, user.getName());
+        preparedStatement.setString(2, user.getAddress());
         preparedStatement.executeUpdate();
         preparedStatement.close();
         connection.close();

@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -14,8 +13,9 @@ import lombok.ToString;
 @Setter
 @ToString
 @Builder
-public class User {
+public class Account {
     private int id;
-    private String name;
-    private String address;
+    private int userId;
+    private double balance;
+    private String currency;
 }
