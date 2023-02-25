@@ -1,19 +1,18 @@
 package by.lev.repository.transaction_repository;
 
+import by.lev.app_exception.AppException;
 import by.lev.domain.Transaction;
-import by.lev.repository.CRUDOperable;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public interface TransactionRepositoryInterface {
 
-    boolean create(Transaction transaction) throws SQLException;
+    boolean create(Transaction transaction) throws AppException;
 
-    Transaction read(Integer value) throws SQLException;
+    Transaction read(Integer value) throws AppException;
 
-    List<Transaction> readAllByAccountId(Integer accountId) throws SQLException;
+    List<Transaction> readAllByAccountId(Integer accountId) throws AppException;
 
-    List<Transaction> readAll() throws SQLException;
+    List<Transaction> readAll() throws AppException;
 
 }

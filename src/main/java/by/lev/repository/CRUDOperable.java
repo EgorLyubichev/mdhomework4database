@@ -1,17 +1,17 @@
 package by.lev.repository;
 
+import by.lev.app_exception.AppException;
+
 import java.util.List;
 
 public interface CRUDOperable<T, N> {
 
-    void create(T t) throws Exception;
+    void create(T t) throws AppException;
 
-    T read(N value) throws Exception;
+    T read(N value) throws AppException;
 
-    List<T> readAll() throws Exception;
+    List<T> readAll() throws AppException;
 
-//    void update(T t, String value) throws Exception;
-
-    void delete(N value) throws Exception;
+    void delete(N value) throws AppException;
 
 }

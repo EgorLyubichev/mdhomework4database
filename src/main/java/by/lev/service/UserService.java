@@ -1,5 +1,6 @@
 package by.lev.service;
 
+import by.lev.app_exception.AppException;
 import by.lev.domain.Account;
 import by.lev.domain.User;
 import by.lev.repository.account_repository.AccountRepository;
@@ -14,9 +15,17 @@ public class UserService implements UserServiceInterface {
     private UserRepositoryInterface userRepository = new UserRepository();
 
     @Override
-    public User addUser(User userSource) throws Exception {
-        userRepository.create(userSource);
-        return userRepository.read(userSource.getName());
+    public User addUser(User userSource) {
+        User userDestination = null;
+        try {
+            userRepository.create(userSource);
+            userDestination = userRepository.readByUserName(userSource.getName());
+            return userDestination;
+        } catch (AppException e) {
+            System.err.println(e.getError() + ": " + e.getError().getErrorLocation());
+            System.err.println(e.getCause());
+        }
+        return userDestination;
     }
 
     @Override
@@ -31,7 +40,7 @@ public class UserService implements UserServiceInterface {
 
     /**
      * Обновить у пользователя можно только поле 'адрес'.
-     * */
+     */
     @Override
     public User updateUserAddress(User user, String address) throws Exception {
         userRepository.update(user, address);
@@ -42,7 +51,7 @@ public class UserService implements UserServiceInterface {
     /**
      * Удалить пользователя можно только в том случае, если у него на балансах 0,
      * или у пользователя нет аккаунтов.
-     * */
+     */
     @Override
     public boolean deleteUser(User user) throws Exception {
         AccountRepositoryInterface ar = new AccountRepository();

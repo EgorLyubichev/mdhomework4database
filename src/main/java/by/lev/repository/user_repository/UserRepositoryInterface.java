@@ -1,5 +1,6 @@
 package by.lev.repository.user_repository;
 
+import by.lev.app_exception.AppException;
 import by.lev.domain.User;
 import by.lev.repository.CRUDOperable;
 
@@ -7,10 +8,10 @@ import java.sql.SQLException;
 
 public interface UserRepositoryInterface extends CRUDOperable<User, Integer> {
 
-    User read(String userName) throws SQLException;
+    User readByUserName(String userName) throws AppException;
 
-    void delete(String userName) throws SQLException;
+    void deleteByUserName(String userName) throws AppException;
 
-    void update(User user, String value) throws Exception;
+    void update(User user, String value) throws AppException;
 
 }

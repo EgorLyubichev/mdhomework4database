@@ -1,5 +1,6 @@
 package by.lev.service;
 
+import by.lev.app_exception.AppException;
 import by.lev.domain.Account;
 import by.lev.domain.Transaction;
 import by.lev.repository.account_repository.AccountRepository;
@@ -16,7 +17,7 @@ public class AccountService implements AccountServiceInterface {
     AccountRepositoryInterface accountRepository = new AccountRepository();
 
     @Override
-    public boolean addAccount(Account account) throws Exception {
+    public boolean addAccount(Account account) throws AppException {
         List<Account> userAccounts = accountRepository.readAccountsByUserId(account.getUserId());
         Set<String> currencies = new HashSet<>();
         for (Account userAccount : userAccounts) {
@@ -30,7 +31,7 @@ public class AccountService implements AccountServiceInterface {
     }
 
     @Override
-    public boolean topUpTheBalance(Account account, String amount) throws Exception {
+    public boolean topUpTheBalance(Account account, String amount) throws AppException {
         if (amount.isEmpty()) {
             return false;
         }
@@ -88,7 +89,6 @@ public class AccountService implements AccountServiceInterface {
         return true;
     }
 
-
     private boolean checkAmountCorrectness(String amount) {
         Pattern pattern = Pattern.compile("\\d*\\.?\\d{0,3}");
         Matcher matcher = pattern.matcher(amount);
@@ -103,15 +103,18 @@ public class AccountService implements AccountServiceInterface {
         return (amount > 0 && amount <= 100_000_000);
     }
 
-    public List<Account> getUserAccountsByUserId(int userId) throws Exception {
+    public List<Account> getUserAccountsByUserId(int userId) throws AppException {
         return accountRepository.readAccountsByUserId(userId);
     }
 
-    public Account getAccountByAccountId(int accountId) throws Exception {
+    public Account getAccountByAccountId(int accountId) throws AppException {
         return accountRepository.read(accountId);
     }
 
-    public boolean deleteAccountByAccountId(int accountId) throws Exception {
+    /**
+     * Удалить аккаунт можно только в том случае, если на балансе 0.
+     * */
+    public boolean deleteAccountByAccountId(int accountId) throws AppException {
         Account account = getAccountByAccountId(accountId);
         if (account.getBalance() == 0) {
             accountRepository.delete(accountId);
@@ -120,7 +123,10 @@ public class AccountService implements AccountServiceInterface {
         return false;
     }
 
-    public boolean deleteUserAccountsByUserId(int userId) throws Exception {
+    /**
+     * Удалить аккаунты пользователя можно только в том случае, если на балансах 0.
+     * */
+    public boolean deleteUserAccountsByUserId(int userId) throws AppException {
         List<Account> accounts = accountRepository.readAccountsByUserId(userId);
         double balance = 0.0;
         for (Account account : accounts) {

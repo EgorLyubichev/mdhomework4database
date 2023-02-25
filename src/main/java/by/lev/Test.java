@@ -1,22 +1,29 @@
 package by.lev;
 
 import by.lev.domain.Account;
+import by.lev.domain.User;
+import by.lev.repository.user_repository.UserRepository;
+import by.lev.repository.user_repository.UserRepositoryInterface;
 import by.lev.service.AccountService;
 import by.lev.service.AccountServiceInterface;
+import by.lev.service.UserService;
+import by.lev.service.UserServiceInterface;
 
 import java.util.List;
 
 public class Test {
     public static void main(String[] args) throws Exception {
 
-        AccountServiceInterface as = new AccountService();
+ //       UserRepositoryInterface ur = new UserRepository();
+        User user = new User();
+        user.setName("Vasia");
+   //     ur.create(user);
 
-        Account account = as.getAccountByAccountId(3);
-        System.out.println(account);
-        System.out.println(as.withdrawMoneyFromTheAccount(account, "1018.22"));
-        account = as.getAccountByAccountId(3);
-        System.out.println(account);
-        System.out.println(as.deleteUserAccountsByUserId(2));
+        System.out.println();
+
+        UserServiceInterface us = new UserService();
+        us.addUser(user);
+
 
     }
 }
