@@ -1,19 +1,22 @@
 package by.lev;
 
 import by.lev.domain.Account;
-import by.lev.domain.Transaction;
-import by.lev.repository.account_repository.AccountRepository;
-import by.lev.repository.account_repository.AccountRepositoryInterface;
-import by.lev.repository.transaction_repository.TransactionRepository;
-import by.lev.repository.transaction_repository.TransactionRepositoryInterface;
+import by.lev.service.AccountService;
+import by.lev.service.AccountServiceInterface;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public class Test {
-    public static void main(String[] args) throws SQLException {
-        TransactionRepositoryInterface trR = new TransactionRepository();
-        List<Transaction> transactions = trR.readAll();
-        transactions.forEach(System.out::println);
+    public static void main(String[] args) throws Exception {
+
+        AccountServiceInterface as = new AccountService();
+
+        Account account = as.getAccountByAccountId(3);
+        System.out.println(account);
+        System.out.println(as.withdrawMoneyFromTheAccount(account, "1018.22"));
+        account = as.getAccountByAccountId(3);
+        System.out.println(account);
+        System.out.println(as.deleteUserAccountsByUserId(2));
+
     }
 }

@@ -7,12 +7,12 @@ import java.sql.SQLException;
 public class AppConnection {
 
     public Connection getConnection() {
-        Connection connection;
+        Connection connection = null;
         try {
             Class.forName("org.sqlite.JDBC");
             connection = DriverManager.getConnection("jdbc:sqlite:c:\\sqlitedb\\sqlitedb.db");
         } catch (SQLException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
         return connection;
     }

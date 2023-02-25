@@ -1,18 +1,17 @@
 package by.lev.repository;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public interface CRUDOperable<T, N> {
 
-    void create(T t) throws SQLException;
+    void create(T t) throws Exception;
 
-    T read(N value) throws SQLException;
+    T read(N value) throws Exception;
 
-    List<T> readAll() throws SQLException;
+    List<T> readAll() throws Exception;
 
-    void update(T t, N value) throws SQLException;
+//    void update(T t, String value) throws Exception;
 
-    void delete(N value) throws SQLException;
+    void delete(N value) throws Exception;
 
 }

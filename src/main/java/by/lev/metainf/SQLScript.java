@@ -4,27 +4,31 @@ import lombok.Getter;
 
 @Getter
 public enum SQLScript {
-    USER_REPOSITORY_READ("SELECT * FROM Users WHERE userId = "),
-    USER_REPOSITORY_READ_ALL("SELECT * FROM Users"),
-    USER_REPOSITORY_CREATE("INSERT INTO Users (name, address) VALUES (?, ?)"),
-    USER_REPOSITORY_UPDATE("UPDATE Users SET name = ?, address = ? WHERE userId = ?"),
-    USER_REPOSITORY_DELETE("DELETE FROM Users WHERE userId = ?"),
-    USER_REPOSITORY_DELETE_BY_NAME("DELETE FROM Users WHERE name = ?"),
+    UR_READ("SELECT * FROM Users WHERE userId = "),
+    UR_READ_BY_NAME("SELECT * FROM Users WHERE name = '"),
+    UR_READ_ALL("SELECT * FROM Users"),
+    UR_READ_NAMES("SELECT name FROM Users"),
+    UR_CREATE("INSERT INTO Users (name, address) VALUES (?, ?)"),
+    UR_UPDATE("UPDATE Users SET address = ? WHERE userId = ?"),
+    UR_DELETE("DELETE FROM Users WHERE userId = ?"),
+    UR_DELETE_BY_NAME("DELETE FROM Users WHERE name = ?"),
 
-    ACCOUNT_REPOSITORY_READ("SELECT * FROM Accounts WHERE accountId = "),
-    ACCOUNT_REPOSITORY_READ_ALL("SELECT * FROM Accounts"),
-    ACCOUNT_REPOSITORY_CREATE("INSERT INTO Accounts (userId, balance, currency) VALUES (?, ?, ?)"),
-    ACCOUNT_REPOSITORY_UPDATE("UPDATE Accounts SET balance = ? WHERE accountId = ?"),
-    ACCOUNT_REPOSITORY_DELETE("DELETE FROM Accounts WHERE accountId = ?"),
+    AR_READ("SELECT * FROM Accounts WHERE accountId = "),
+    AR_READ_BY_USER_ID("SELECT * FROM Accounts WHERE userId = "),
+    AR_READ_ALL("SELECT * FROM Accounts"),
+    AR_CREATE("INSERT INTO Accounts (userId, balance, currency) VALUES (?, ?, ?)"),
+    AR_UPDATE("UPDATE Accounts SET balance = ? WHERE accountId = ?"),
+    AR_DELETE("DELETE FROM Accounts WHERE accountId = ?"),
+    AR_DELETE_ACCOUNTS_BY_USER_ID("DELETE FROM Accounts WHERE userId = ?"),
 
-    TRANSACTION_REPOSITORY_READ("SELECT * FROM Transactions WHERE transactionId = "),
-    TRANSACTION_REPOSITORY_READ_BY_ACCOUNT_ID("SELECT * FROM Transactions WHERE accountId = "),
-    TRANSACTION_REPOSITORY_READ_ALL("SELECT * FROM Transactions"),
-    TRANSACTION_REPOSITORY_CREATE("INSERT INTO Transactions (accountId, amount) VALUES (?, ?)");
+    TR_READ("SELECT * FROM Transactions WHERE transactionId = "),
+    TR_READ_BY_ACCOUNT_ID("SELECT * FROM Transactions WHERE accountId = "),
+    TR_READ_ALL("SELECT * FROM Transactions"),
+    TR_CREATE("INSERT INTO Transactions (accountId, amount) VALUES (?, ?)");
 
-    private final String value;
+    private final String script;
 
-    SQLScript(String value) {
-        this.value = value;
+    SQLScript(String script) {
+        this.script = script;
     }
 }

@@ -15,7 +15,7 @@
     <connection id="651f588b-2564-402d-a781-8fedb7d409db">
       <console name="sqliteDB" type="STANDARD" schema="" session="Main"><![CDATA[--create table Users(
 --userId integer primary key autoincrement,
---name varchar(50) not null,
+--name varchar(50) not null unique,
 --address varchar(255)
 --);
 
@@ -38,7 +38,9 @@
 --foreign key (accountId) references Accounts (accountId)
 --);
 
---drop table Transactions;]]></console>
+--drop table Transactions;
+
+--select * from Users where name = 'George';]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
@@ -46,7 +48,7 @@
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
     <open-files>
-      <object connection-id="651f588b-2564-402d-a781-8fedb7d409db" object-ref="schemas/main/tables/Transactions" />
+      <object connection-id="651f588b-2564-402d-a781-8fedb7d409db" object-ref="schemas/main/tables/Accounts" />
     </open-files>
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
