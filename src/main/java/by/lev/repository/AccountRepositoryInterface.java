@@ -1,4 +1,4 @@
-package by.lev.repository.account_repository;
+package by.lev.repository;
 
 import by.lev.app_exception.AppException;
 import by.lev.domain.Account;

@@ -3,9 +3,10 @@ package by.lev.service;
 import by.lev.app_exception.AppException;
 import by.lev.domain.Account;
 import by.lev.domain.Transaction;
-import by.lev.repository.account_repository.AccountRepository;
-import by.lev.repository.account_repository.AccountRepositoryInterface;
+import by.lev.repository.AccountRepository;
+import by.lev.repository.AccountRepositoryInterface;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -14,24 +15,29 @@ import java.util.regex.Pattern;
 
 public class AccountService implements AccountServiceInterface {
 
-    AccountRepositoryInterface accountRepository = new AccountRepository();
+    private final AccountRepositoryInterface accountRepository = new AccountRepository();
 
     @Override
-    public boolean addAccount(Account account) throws AppException {
-        List<Account> userAccounts = accountRepository.readAccountsByUserId(account.getUserId());
-        Set<String> currencies = new HashSet<>();
-        for (Account userAccount : userAccounts) {
-            currencies.add(userAccount.getCurrency());
-        }
-        if (!currencies.contains(account.getCurrency().toUpperCase())) {
-            accountRepository.create(account);
-            return true;
+    public boolean addAccount(Account account) {
+        try {
+            List<Account> userAccounts = accountRepository.readAccountsByUserId(account.getUserId());
+            Set<String> currencies = new HashSet<>();
+            for (Account userAccount : userAccounts) {
+                currencies.add(userAccount.getCurrency());
+            }
+            if (!currencies.contains(account.getCurrency().toUpperCase())) {
+                accountRepository.create(account);
+                return true;
+            }
+        } catch (AppException e) {
+            System.err.println(e.getError());
+            System.err.println(e.getError().getErrorLocation());
         }
         return false;
     }
 
     @Override
-    public boolean topUpTheBalance(Account account, String amount) throws AppException {
+    public boolean topUpTheBalance(Account account, String amount) {
         if (amount.isEmpty()) {
             return false;
         }
@@ -48,18 +54,24 @@ public class AccountService implements AccountServiceInterface {
         if (account.getBalance() + moneyValue > 2_000_000_000) {
             return false;
         }
-        TransactionServiceInterface transactionService = new TransactionService();
-        transactionService.addTransaction(
-                Transaction.builder()
-                        .amount(moneyValue)
-                        .accountId(account.getId())
-                        .build());
-        account.setBalance(account.getBalance() + moneyValue);
-        accountRepository.update(account);
-        return true;
+        try {
+            TransactionServiceInterface transactionService = new AppTransactionService();
+            transactionService.addTransaction(
+                    Transaction.builder()
+                            .amount(moneyValue)
+                            .accountId(account.getId())
+                            .build());
+            account.setBalance(account.getBalance() + moneyValue);
+            accountRepository.update(account);
+            return true;
+        } catch (AppException e) {
+            System.err.println(e.getError());
+            System.err.println(e.getError().getErrorLocation());
+        }
+        return false;
     }
 
-    public boolean withdrawMoneyFromTheAccount(Account account, String amount) throws Exception {
+    public boolean withdrawMoneyFromTheAccount(Account account, String amount) {
         if (amount.isEmpty()) {
             return false;
         }
@@ -76,17 +88,23 @@ public class AccountService implements AccountServiceInterface {
         if (account.getBalance() - moneyValue < 0) {
             return false;
         }
-        String strValueToTransaction = "-" + moneyValue;
-        double doubleValueToTransaction = Double.parseDouble(strValueToTransaction);
-        TransactionServiceInterface transactionService = new TransactionService();
-        transactionService.addTransaction(
-                Transaction.builder()
-                        .amount(doubleValueToTransaction)
-                        .accountId(account.getId())
-                        .build());
-        account.setBalance(account.getBalance() - moneyValue);
-        accountRepository.update(account);
-        return true;
+        try {
+            String strValueToTransaction = "-" + moneyValue;
+            double doubleValueToTransaction = Double.parseDouble(strValueToTransaction);
+            TransactionServiceInterface transactionService = new AppTransactionService();
+            transactionService.addTransaction(
+                    Transaction.builder()
+                            .amount(doubleValueToTransaction)
+                            .accountId(account.getId())
+                            .build());
+            account.setBalance(account.getBalance() - moneyValue);
+            accountRepository.update(account);
+            return true;
+        } catch (AppException e) {
+            System.err.println(e.getError());
+            System.err.println(e.getError().getErrorLocation());
+        }
+        return false;
     }
 
     private boolean checkAmountCorrectness(String amount) {
@@ -103,38 +121,64 @@ public class AccountService implements AccountServiceInterface {
         return (amount > 0 && amount <= 100_000_000);
     }
 
-    public List<Account> getUserAccountsByUserId(int userId) throws AppException {
-        return accountRepository.readAccountsByUserId(userId);
+    public List<Account> getUserAccountsByUserId(int userId) {
+        List<Account> accounts = new ArrayList<>();
+        try {
+            accounts = accountRepository.readAccountsByUserId(userId);
+        } catch (AppException e) {
+            System.err.println(e.getError());
+            System.err.println(e.getError().getErrorLocation());
+        }
+        return accounts;
     }
 
-    public Account getAccountByAccountId(int accountId) throws AppException {
-        return accountRepository.read(accountId);
+    public Account getAccountByAccountId(int accountId) {
+        Account account = new Account();
+        try {
+            account = accountRepository.read(accountId);
+        } catch (AppException e) {
+            System.err.println(e.getError());
+            System.err.println(e.getError().getErrorLocation());
+        }
+        return account;
     }
 
     /**
      * Удалить аккаунт можно только в том случае, если на балансе 0.
-     * */
-    public boolean deleteAccountByAccountId(int accountId) throws AppException {
-        Account account = getAccountByAccountId(accountId);
-        if (account.getBalance() == 0) {
-            accountRepository.delete(accountId);
-            return true;
+     */
+    public boolean deleteAccountByAccountId(int accountId) {
+        try{
+            Account account = getAccountByAccountId(accountId);
+            if (account.getBalance() == 0) {
+                accountRepository.delete(accountId);
+                return true;
+            }
+            return false;
+        }catch (AppException e){
+            System.err.println(e.getError());
+            System.err.println(e.getError().getErrorLocation());
         }
         return false;
     }
 
     /**
      * Удалить аккаунты пользователя можно только в том случае, если на балансах 0.
-     * */
-    public boolean deleteUserAccountsByUserId(int userId) throws AppException {
-        List<Account> accounts = accountRepository.readAccountsByUserId(userId);
-        double balance = 0.0;
-        for (Account account : accounts) {
-            balance += account.getBalance();
-        }
-        if (balance == 0) {
-            accountRepository.deleteUserAccountsByUserId(userId);
-            return true;
+     */
+    public boolean deleteUserAccountsByUserId(int userId) {
+        try{
+            List<Account> accounts = accountRepository.readAccountsByUserId(userId);
+            double balance = 0.0;
+            for (Account account : accounts) {
+                balance += account.getBalance();
+            }
+            if (balance == 0) {
+                accountRepository.deleteUserAccountsByUserId(userId);
+                return true;
+            }
+            return false;
+        }catch (AppException e){
+            System.err.println(e.getError());
+            System.err.println(e.getError().getErrorLocation());
         }
         return false;
     }

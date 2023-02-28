@@ -7,13 +7,13 @@ import java.util.List;
 
 public interface TransactionServiceInterface {
 
-    boolean addTransaction(Transaction transaction) throws AppException;
+    boolean addTransaction(Transaction transaction);
 
-    Transaction showTransaction(int transactionId) throws AppException;
+    Transaction getTransaction(int transactionId);
 
-    List<Transaction> showTransactionsByAccountId(int accountId) throws AppException;
+    List<Transaction> getTransactionsByAccountId(int accountId);
 
-    List<Transaction> showAllTransactions() throws AppException;
+    List<Transaction> getAllTransactions();
 
 
 }

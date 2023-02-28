@@ -1,4 +1,4 @@
-package by.lev.repository.transaction_repository;
+package by.lev.repository;
 
 import by.lev.app_exception.AppException;
 import by.lev.domain.Transaction;

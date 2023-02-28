@@ -1,23 +1,24 @@
 package by.lev.service;
 
+import by.lev.app_exception.AppException;
 import by.lev.domain.Account;
 
 import java.util.List;
 
 public interface AccountServiceInterface {
 
-    boolean addAccount(Account account) throws Exception;
+    boolean addAccount(Account account);
 
-    boolean topUpTheBalance(Account account, String amount) throws Exception;
+    boolean topUpTheBalance(Account account, String amount);
 
-    boolean withdrawMoneyFromTheAccount(Account account, String amount) throws Exception;
+    boolean withdrawMoneyFromTheAccount(Account account, String amount);
 
-    List<Account> getUserAccountsByUserId(int userId) throws Exception;
+    List<Account> getUserAccountsByUserId(int userId);
 
-    Account getAccountByAccountId(int accountId) throws Exception;
+    Account getAccountByAccountId(int accountId);
 
-    boolean deleteAccountByAccountId(int accountId)throws Exception;
+    boolean deleteAccountByAccountId(int accountId);
 
-    boolean deleteUserAccountsByUserId(int userId) throws Exception;
+    boolean deleteUserAccountsByUserId(int userId);
 
 }

@@ -1,4 +1,4 @@
-package by.lev.repository.account_repository;
+package by.lev.repository;
 
 import by.lev.app_exception.AppException;
 import by.lev.connection_db.AppConnection;
@@ -49,7 +49,12 @@ public class AccountRepository implements AccountRepositoryInterface {
 
     @Override
     public Account read(Integer accountId) throws AppException {
-        Account account = null;
+        Account account = Account.builder()
+                .id(0)
+                .userId(0)
+                .balance(0.0)
+                .currency("")
+                .build();
         try {
             connection = new AppConnection().getConnection();
             Statement statement = connection.createStatement();
@@ -70,7 +75,7 @@ public class AccountRepository implements AccountRepositoryInterface {
 
     @Override
     public List<Account> readAccountsByUserId(int userId) throws AppException {
-        List<Account> accounts = null;
+        List<Account> accounts = new ArrayList<>();
         try {
             connection = new AppConnection().getConnection();
             Statement statement = connection.createStatement();

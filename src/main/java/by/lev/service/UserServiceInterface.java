@@ -1,18 +1,21 @@
 package by.lev.service;
 
+import by.lev.app_exception.AppException;
 import by.lev.domain.User;
 
 import java.util.List;
 
 public interface UserServiceInterface {
 
-    User addUser(User userSource) throws Exception;
+    User addUser(User userSource);
 
-    User readUser(int userId) throws Exception;
+    User readUser(int userId);
 
-    List<User> readAllUsers() throws Exception;
+    User readUserByUserName(String userName);
 
-    User updateUserAddress(User user, String address)throws Exception;
+    List<User> readAllUsers();
 
-    boolean deleteUser(User user) throws Exception;
+    User updateUserAddress(User user, String address);
+
+    boolean deleteUser(User user);
 }
