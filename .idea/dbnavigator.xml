@@ -40,14 +40,18 @@
 
 --drop table Transactions;
 
---select * from Users where name = 'George';]]></console>
+--select * from Users where name = 'George';
+
+select seq from sqlite_sequence where name="Users";]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
     <last-used-providers />
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files />
+    <open-files>
+      <object connection-id="651f588b-2564-402d-a781-8fedb7d409db" object-ref="schemas/main/tables/Transactions" />
+    </open-files>
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
     <filter-actions connection-id="651f588b-2564-402d-a781-8fedb7d409db" dataset="main.Accounts" active-filter-id="EMPTY_FILTER" />

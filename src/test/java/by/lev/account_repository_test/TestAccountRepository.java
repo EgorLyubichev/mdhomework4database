@@ -18,7 +18,7 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
-public class AccountRepositoryTest {
+public class TestAccountRepository {
     AccountRepositoryInterface accountRepository = new AccountRepository();
     Account account;
 
@@ -81,7 +81,6 @@ public class AccountRepositoryTest {
         Account expected = accountRepository.read(account.getId());
         assertEquals(account.getBalance(), expected.getBalance());
     }
-
 
     @Test
     public void testDeleteAccountByAccountId()throws AppException{

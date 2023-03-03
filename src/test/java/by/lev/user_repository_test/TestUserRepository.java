@@ -14,7 +14,7 @@ import java.util.List;
 
 import static org.testng.Assert.assertFalse;
 
-public class UserRepositoryTest {
+public class TestUserRepository {
 
     UserRepositoryInterface userRepository = new UserRepository();
     User user;

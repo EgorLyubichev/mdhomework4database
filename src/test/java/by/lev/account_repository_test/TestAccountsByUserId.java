@@ -16,7 +16,7 @@ import java.util.Set;
 
 import static org.testng.Assert.assertFalse;
 
-public class AccountsByUserIdTest {
+public class TestAccountsByUserId {
 
     AccountRepositoryInterface accountRepository = new AccountRepository();
     Account account1;
