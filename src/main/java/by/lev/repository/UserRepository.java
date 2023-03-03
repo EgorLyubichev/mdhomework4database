@@ -32,7 +32,7 @@ public class UserRepository implements UserRepositoryInterface {
     Connection connection;
 
     @Override
-    public void create(User user) throws AppException {
+    public boolean create(User user) throws AppException {
         try {
             connection = new AppConnection().getConnection();
             PreparedStatement preparedStatement =
@@ -42,6 +42,7 @@ public class UserRepository implements UserRepositoryInterface {
             preparedStatement.executeUpdate();
             preparedStatement.close();
             connection.close();
+            return true;
         } catch (SQLException e) {
             throw new AppException(USER_REPOSITORY_ERROR_01, e);
         }
@@ -154,6 +155,5 @@ public class UserRepository implements UserRepositoryInterface {
         }catch(SQLException e){
             throw new AppException(USER_REPOSITORY_ERROR_07, e);
         }
-
     }
 }

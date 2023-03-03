@@ -32,7 +32,7 @@ public class AccountRepository implements AccountRepositoryInterface {
     Connection connection;
 
     @Override
-    public void create(Account account) throws AppException {
+    public boolean create(Account account) throws AppException {
         try {
             connection = new AppConnection().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(AR_CREATE.getScript());
@@ -42,6 +42,7 @@ public class AccountRepository implements AccountRepositoryInterface {
             preparedStatement.executeUpdate();
             preparedStatement.close();
             connection.close();
+            return true;
         } catch (SQLException e) {
             throw new AppException(ACCOUNT_REPOSITORY_ERROR_01, e);
         }

@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface CRUDOperable<T, N> {
 
-    void create(T t) throws AppException;
+    boolean create(T t) throws AppException;
 
     T read(N value) throws AppException;
 
